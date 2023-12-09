@@ -1,0 +1,31 @@
+version: "3.7"
+
+services:
+  php:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: myapp
+    restart: always
+    depends_on:
+      - mysql
+    networks:
+      - yakinnet
+      
+  mysql:
+    image: mysql:8.0
+		container_name: mysqldb    
+    env_file: ./mysql/.env
+    ports:
+    - 3306:3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - yakinnet
+
+networks:
+  yakinnet:
+
+volumes:
+  mysql-data:
+
